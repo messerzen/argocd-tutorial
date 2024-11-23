@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-hello-world
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/messerzen/argocd-tutorial.git
+    targetRevision: HEAD
+    path: develop
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: myapp
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=True
+
+    automated:
+      prune: true
+      # selfHeal: true
